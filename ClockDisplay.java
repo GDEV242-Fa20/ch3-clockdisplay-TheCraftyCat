@@ -9,8 +9,11 @@
  * and reacts by incrementing the display. This is done in the usual clock
  * fashion: the hour increments when the minutes roll over to zero.
  * 
- * @author Michael Kölling and David J. Barnes
- * @version 2016.02.29
+ * @author Catherine Oldfield
+ * @for RVCC GDEV242 - Fall 2020
+ * @from code written by Michael Kölling and David J. Barnes
+ * @version 09/23/2020
+ * 
  */
 public class ClockDisplay
 {
@@ -80,5 +83,13 @@ public class ClockDisplay
     {
         displayString = hours.getDisplayValue() + ":" + 
                         minutes.getDisplayValue();
+    }
+    
+    /**
+     * Return the current time of this display in the formay HH:MM AM.
+     */
+    public String get12HourInternalDisplay()
+    {
+        return null; //placeholder!
     }
 }
