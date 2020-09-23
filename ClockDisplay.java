@@ -86,10 +86,20 @@ public class ClockDisplay
     }
     
     /**
-     * Return the current time of this display in the formay HH:MM AM.
+     * Return the current time of this display in the format HH:MM AM
+     * (or HH:MM PM, if appropriate)
      */
     public String get12HourInternalDisplay()
     {
+        boolean isAM = true; 
+        
+        if (hours.getValue() >= 12)
+        {
+            isAM = false; // the time is PM, not AM        
+        }
+        
+        
+        
         return null; //placeholder!
     }
 }
