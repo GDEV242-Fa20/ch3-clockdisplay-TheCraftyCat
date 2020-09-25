@@ -105,7 +105,9 @@ public class ClockDisplay
             isAM = false; // the time is PM, not AM        
         }
         
-        
+        // this is a test block of text
+        // because git desktop isn't working
+        // and i am troubleshooting the connection
         
         return null; //placeholder!
     }
