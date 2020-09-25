@@ -11,7 +11,7 @@
  * 
  * @author Catherine Oldfield
  * @for RVCC GDEV242 - Fall 2020
- * @based on code by Michael Kölling and David J. Barnes
+ * @from code by Michael Kölling and David J. Barnes
  * @version 09/25/2020
  */
 public class ClockDisplay
@@ -22,13 +22,13 @@ public class ClockDisplay
     
     /**
      * Constructor for ClockDisplay objects. This constructor 
-     * creates a new clock set at 00:00.
+     * creates a new clock set at 12:00AM.
      */
     public ClockDisplay()
     {
         hours = new NumberDisplay(24);
         minutes = new NumberDisplay(60);
-        updateDisplay();
+        get24HourInternalDisplay();
     }
 
     /**
@@ -53,18 +53,20 @@ public class ClockDisplay
         if(minutes.getValue() == 0) {  // it just rolled over!
             hours.increment();
         }
-        updateDisplay();
+        //updateDisplay();
+        get24HourInternalDisplay();
     }
 
     /**
      * Set the time of the display to the specified hour and
      * minute.
+     * This method accepts input in 12-hour military time.
      */
     public void setTime(int hour, int minute)
     {
         hours.setValue(hour);
         minutes.setValue(minute);
-        updateDisplay();
+        get24HourInternalDisplay();
     }
 
     /**
@@ -84,4 +86,29 @@ public class ClockDisplay
                         minutes.getDisplayValue();
     }
     
+    /**
+     * Return the current time of this display in the format HH:MM AM
+     * (or HH:MM PM, if appropriate)
+     */
+    public String get24HourInternalDisplay()
+    {
+        int displayHour = hours.getValue();
+        String suffix = "AM";
+        
+        if (displayHour >= 12)
+        {
+            displayHour -= 12;
+            suffix = "PM";
+        }
+        
+        if (displayHour == 0)
+        {
+            displayHour = 12;
+        }
+        
+        displayString = displayHour + ":" + minutes.getDisplayValue() + 
+                        suffix;
+        
+        return displayString;
+    }
 }
