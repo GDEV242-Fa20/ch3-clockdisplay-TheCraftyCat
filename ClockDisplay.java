@@ -19,11 +19,11 @@ public class ClockDisplay
     private NumberDisplay hours;
     private NumberDisplay minutes;
     private String displayString;    // simulates the actual display
-    private boolean isAM;           // indicates morning or evening
+    private boolean isAM;            // indicates morning or evening
     
     /**
      * Constructor for ClockDisplay objects. This constructor 
-     * creates a new clock set at 00:00.
+     * creates a new clock set at 12:00AM.
      */
     public ClockDisplay()
     {
@@ -33,7 +33,7 @@ public class ClockDisplay
         hours = new NumberDisplay(12);
         minutes = new NumberDisplay(60);
         isAM = true;            // assume clock "starts" in the morning
-        updateDisplay();
+        get12HourInternalDisplay();
     }
 
     /**
@@ -48,7 +48,7 @@ public class ClockDisplay
         
         hours = new NumberDisplay(12);
         minutes = new NumberDisplay(60);
-        setTime(hour, minute);
+        setTime(hour, minute, isItMorning);
         isAM = isItMorning;
     }
 
@@ -62,18 +62,26 @@ public class ClockDisplay
         if(minutes.getValue() == 0) {  // it just rolled over!
             hours.increment();
         }
-        updateDisplay();
+        
+        if (hours.getValue() == 0 && minutes.getValue() == 0)
+        {
+            isAM = !isAM; // meridian just rolled over!
+        }
+        // updateDisplay();
+        get12HourInternalDisplay();
     }
 
     /**
      * Set the time of the display to the specified hour and
      * minute.
      */
-    public void setTime(int hour, int minute)
+    public void setTime(int hour, int minute, boolean isItMorning)
     {
         hours.setValue(hour);
         minutes.setValue(minute);
-        updateDisplay();
+        isAM = isItMorning;
+        // updateDisplay();
+        get12HourInternalDisplay();
     }
 
     /**
@@ -99,16 +107,23 @@ public class ClockDisplay
      */
     public String get12HourInternalDisplay()
     {
+        int displayHour = hours.getValue();
+        String suffix = "AM";
         
-        if (hours.getValue() >= 12)
+        if (displayHour == 0)
         {
-            isAM = false; // the time is PM, not AM        
+            displayHour = 12;   // change the display value from "0" to "12"
+            //isAM = !isAM;       // roll over the meridian
         }
         
-        // this is a test block of text
-        // because git desktop isn't working
-        // and i am troubleshooting the connection
+        if (isAM == false)  // if it's not morning...
+        {
+            suffix = "PM";  // change the suffix to PM
+        }
         
-        return null; //placeholder!
+        displayString = displayHour + ":" + minutes.getDisplayValue() + 
+                        suffix;
+        
+        return displayString;
     }
 }
