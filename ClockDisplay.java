@@ -1,4 +1,3 @@
-
 /**
  * The ClockDisplay class implements a digital clock display for a
  * European-style 24 hour clock. The clock shows hours and minutes. The 
@@ -12,7 +11,7 @@
  * @author Catherine Oldfield
  * @for RVCC GDEV242 - Fall 2020
  * @from code written by Michael Kölling and David J. Barnes
- * @version 09/23/2020
+ * @version 09/25/2020
  * 
  */
 public class ClockDisplay
@@ -20,6 +19,7 @@ public class ClockDisplay
     private NumberDisplay hours;
     private NumberDisplay minutes;
     private String displayString;    // simulates the actual display
+    private boolean isAM;           // indicates morning or evening
     
     /**
      * Constructor for ClockDisplay objects. This constructor 
@@ -27,8 +27,12 @@ public class ClockDisplay
      */
     public ClockDisplay()
     {
-        hours = new NumberDisplay(24);
+        // this line removed for 12-hour version of the clock...
+        // hours = new NumberDisplay(24);
+        
+        hours = new NumberDisplay(12);
         minutes = new NumberDisplay(60);
+        isAM = true;            // assume clock "starts" in the morning
         updateDisplay();
     }
 
@@ -37,11 +41,15 @@ public class ClockDisplay
      * creates a new clock set at the time specified by the 
      * parameters.
      */
-    public ClockDisplay(int hour, int minute)
+    public ClockDisplay(int hour, int minute, boolean isItMorning)
     {
-        hours = new NumberDisplay(24);
+        // this line removed for 12-hour version of the clock...
+        // hours = new NumberDisplay(24);
+        
+        hours = new NumberDisplay(12);
         minutes = new NumberDisplay(60);
         setTime(hour, minute);
+        isAM = isItMorning;
     }
 
     /**
@@ -91,7 +99,6 @@ public class ClockDisplay
      */
     public String get12HourInternalDisplay()
     {
-        boolean isAM = true; 
         
         if (hours.getValue() >= 12)
         {
