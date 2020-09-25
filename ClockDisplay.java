@@ -74,6 +74,8 @@ public class ClockDisplay
     /**
      * Set the time of the display to the specified hour and
      * minute.
+     * For param isItMorning, user shoud input true for AM
+     * or false for PM.
      */
     public void setTime(int hour, int minute, boolean isItMorning)
     {
